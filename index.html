@@ -485,15 +485,15 @@
   <div id="landing">
     <div class="brand">Pearl Quiz Challenge</div>
     <h1 class="title">Test Your <em>Knowledge</em></h1>
-    <p class="subtitle">20 questions spanning history, science, sports, geography & pop culture. Sourced from legendary Pearl Wing quiz sessions. No googling.</p>
+    <p class="subtitle">20 questions from a pool of 50, spanning history, science, sports, geography & pop culture. Sourced from legendary Pearl Wing quiz sessions. No googling.</p>
     <div class="stats-row">
       <div class="stat">
-        <div class="stat-value">20</div>
-        <div class="stat-label">Questions</div>
+        <div class="stat-value">50</div>
+        <div class="stat-label">Question Pool</div>
       </div>
       <div class="stat">
-        <div class="stat-value">4</div>
-        <div class="stat-label">Options Each</div>
+        <div class="stat-value">20</div>
+        <div class="stat-label">Per Round</div>
       </div>
       <div class="stat">
         <div class="stat-value">∞</div>
@@ -802,6 +802,150 @@ const ALL_QUESTIONS = [
     answer: 1,
     explanation: "The Macarena by Los del Río became a global phenomenon in 1996, spending 14 weeks at #1 on the Billboard Hot 100.",
     roast: "The Macarena was probably played at your school annual day. Your aunt definitely danced to it at a wedding. And you STILL got it wrong. Ayyy."
+  },
+  {
+    category: "Music & Cricket",
+    question: "This genre of Caribbean music is witty, satirical, and improvised. Its name derives from the Efik word 'ka isu' meaning 'go on'. Lord Relator composed a famous song in this genre about an Indian cricketer during the 1971 India-West Indies series. Name the genre and the cricketer.",
+    options: ["Reggae — Kapil Dev", "Calypso — Sunil Gavaskar", "Soca — Bishan Singh Bedi", "Ska — Farokh Engineer"],
+    answer: 1,
+    explanation: "Calypso is the genre, and Lord Relator's famous song was about Sunil Gavaskar's performance in the 1971 India-West Indies Test series.",
+    roast: "Caribbean music + Indian cricket legend from the 70s and you blanked? Even the commentary box would've given you better clues than your brain did."
+  },
+  {
+    category: "Nature & India",
+    question: "Tetraponera rufonigra is an ant species whose bite causes the skin to swell into a small 'mound'. Entomologists in Chennai nicknamed it after a beloved steamed food item. What is the ant called?",
+    options: ["Dosa ant", "Idli ant", "Vada ant", "Puttu ant"],
+    answer: 1,
+    explanation: "The ant's bite creates a small steamed-mound-like swelling, earning it the nickname 'Idli ant' among Chennai's entomologists.",
+    roast: "Steamy mound + Chennai. The hints were practically screaming idli at you. What did you think — Chennai is famous for pancakes?"
+  },
+  {
+    category: "History & Psychology",
+    question: "In 1688, a Swiss doctor discovered a syndrome among displaced Swiss soldiers — symptoms included lifeless countenance, confusion of past and present, and ghost hallucinations. He recommended a trip to the Alps as cure. What common modern word came from this?",
+    options: ["Melancholy", "Nostalgia", "Homesickness", "Depression"],
+    answer: 1,
+    explanation: "Nostalgia was originally a medical diagnosis for Swiss soldiers longing for their homeland. The word comes from Greek 'nostos' (homecoming) and 'algos' (pain).",
+    roast: "A disease about missing home, cured by going home, and you didn't think nostalgia? Your vocabulary is suffering from its own identity crisis."
+  },
+  {
+    category: "Brands & Geopolitics",
+    question: "In 2002, an Egyptian boycott committee campaigned across the Arab world against a P&G detergent brand, claiming its logo was a religious symbol. The company responded that the logo symbolized 'an atom's path'. Which brand?",
+    options: ["Tide", "Ariel", "Persil", "Surf"],
+    answer: 1,
+    explanation: "Ariel detergent was boycotted because the name sounded like Ariel Sharon, then the Israeli PM. P&G clarified the logo represented an atom's orbital path.",
+    roast: "A detergent named after an Israeli PM caused an international incident and you missed it. Your general knowledge needs a deep clean."
+  },
+  {
+    category: "Automobiles & India",
+    question: "Sumant Moolgaonkar led Tata Engineering & Locomotive Company (TELCO) from 1949-89. According to an apocryphal story, his name inspired the name of one of India's most successful utility vehicles. Which vehicle?",
+    options: ["Tata Safari", "Tata Sumo", "Tata Nexon", "Tata Sierra"],
+    answer: 1,
+    explanation: "The Tata Sumo was reportedly named after SU-M-O — the initials of Sumant Moolgaonkar, the legendary head of TELCO.",
+    roast: "SU-M-O = Sumant Moolgaonkar. It was literally a name puzzle and you still couldn't piece it together. Even the vehicle is facepalming."
+  },
+  {
+    category: "Language & History",
+    question: "This English word originated from a Mexican Spanish word meaning 'an uproar'. It describes a sudden panicked rush of a crowd. What is the word?",
+    options: ["Fiesta", "Stampede", "Rodeo", "Lasso"],
+    answer: 1,
+    explanation: "Stampede comes from the Mexican Spanish 'estampida' meaning an uproar or sudden rush, later adopted into English.",
+    roast: "Mexican Spanish + uproar + panicked rush. Three clues and you still tripped over yourself. That's a stampede of wrong answers."
+  },
+  {
+    category: "Aviation & Marketing",
+    question: "In 1996, which brand painted an entire Air France Concorde with 200 liters of blue paint (2,000 hours of work), only for its executives to get a disappointing 20-minute ride despite paying first-class fare?",
+    options: ["Red Bull", "Pepsi", "Samsung", "Nike"],
+    answer: 1,
+    explanation: "Pepsi painted a Concorde in their signature blue as part of a massive marketing stunt. The executives' flight lasted only 20 minutes.",
+    roast: "A Concorde painted blue in the 90s? That was peak Pepsi energy. You probably drink Coke anyway, so no wonder you missed this."
+  },
+  {
+    category: "Weather Science",
+    question: "In powerful tropical cyclones, the eyewall clouds slope outward with height, creating the illusion of a wide opening at the top narrowing toward the bottom. What is this phenomenon called?",
+    options: ["Funnel Effect", "Stadium Effect", "Cone Formation", "Vortex Crown"],
+    answer: 1,
+    explanation: "The Stadium Effect occurs when a cyclone's eye appears like looking down into a sports stadium — wide at the top, narrow at the bottom.",
+    roast: "It literally looks like a stadium when viewed from above. Sometimes the answer is exactly what it looks like. Trust your eyes next time."
+  },
+  {
+    category: "Current Affairs & India",
+    question: "In May 2025, Kapil Raghu, an Indian national in the US, was detained for nearly a month after a bottle of perfume in his car was mistakenly identified as a narcotic. What was the perfume?",
+    options: ["Versace Eros", "Opium by YSL", "Dior Sauvage", "Calvin Klein Obsession"],
+    answer: 1,
+    explanation: "Opium by Yves Saint Laurent was mistaken for actual opium, leading to Kapil Raghu's wrongful detention for almost a month.",
+    roast: "A perfume literally called 'Opium' got someone arrested and you couldn't connect the dots? The name was doing all the heavy lifting for you."
+  },
+  {
+    category: "World Leaders & Trivia",
+    question: "Which world leader was so obsessed with Moringa that he sent a team to Tamil Nadu to study its cultivation, planted it at his home, and credited it with saving him from a long illness?",
+    options: ["Hugo Chávez", "Fidel Castro", "Muammar Gaddafi", "Robert Mugabe"],
+    answer: 1,
+    explanation: "Fidel Castro became deeply passionate about Moringa cultivation, sending teams to India to learn about it and promoting it extensively in Cuba.",
+    roast: "A revolutionary leader obsessed with a superfood from Tamil Nadu. Castro took 'farm to table' literally and you still couldn't harvest the answer."
+  },
+  {
+    category: "Language & Logistics",
+    question: "In the shipping industry, when an empty container hitches a ride on a vessel heading back to where containers are needed, rather than being shipped separately, what common English word describes this practice?",
+    options: ["Freeloading", "Piggyback", "Hitchhike", "Deadweight"],
+    answer: 1,
+    explanation: "Piggybacking in logistics means transporting empty containers on existing routes. The term comes from the practice of carrying something on someone's back.",
+    roast: "You use the word 'piggyback' in everyday conversation and couldn't connect it to shipping? Your vocabulary is running on empty, just like those containers."
+  },
+  {
+    category: "Sports History",
+    question: "In this ancient blood sport, dogs would attack a chained bear. The smaller dogs that were thrown underneath the bear were at a severe disadvantage. What popular modern English term came from their plight?",
+    options: ["Top dog", "Underdog", "Watchdog", "Dark horse"],
+    answer: 1,
+    explanation: "Bear baiting — where smaller dogs went 'under' the bear — gave us the term 'underdog' for someone at a disadvantage who fights against the odds.",
+    roast: "You use 'underdog' every time your team is losing and you had no idea where it came from. The bears are laughing at you from history."
+  },
+  {
+    category: "Music History",
+    question: "An ancient Mediterranean proverb warned that 'a rolling stone gathers no moss' — constant motion prevents accumulation. Centuries later, a young British band borrowed their name from a nearby American record. Which band?",
+    options: ["The Beatles", "The Rolling Stones", "Led Zeppelin", "The Who"],
+    answer: 1,
+    explanation: "The Rolling Stones took their name from a Muddy Waters song, which itself referenced the ancient proverb. They were pressed for a name and grabbed it on the spot.",
+    roast: "One of the most famous bands in human history and you missed the origin of their name? Keith Richards just lit another cigarette in disappointment."
+  },
+  {
+    category: "Etymology",
+    question: "This word derives from the Latin 'caput' meaning 'head'. In medieval Europe, it referred to foundational wealth from which gains could grow. Political thinkers later broadened it to describe an entire economic system. What is it?",
+    options: ["Feudalism", "Capitalism", "Mercantilism", "Imperialism"],
+    answer: 1,
+    explanation: "Capitalism comes from Latin 'caput' (head/source). Medieval merchants used 'capital' to mean foundational wealth, and it evolved to describe the dominant global economic system.",
+    roast: "You live in a capitalist society, complain about capitalism, and don't know where the word comes from. The irony is thicker than your wallet is thin."
+  },
+  {
+    category: "AI & Politics",
+    question: "The White House posted an AI-generated image of President Trump with a penguin as part of the viral 'Nihilist Penguin' meme. What major geographical blunder led to widespread mockery?",
+    options: ["The penguin was in a desert", "Penguins were shown in the Arctic (they only live in the Southern Hemisphere)", "The White House lawn had snow", "The penguin was shown in Europe"],
+    answer: 1,
+    explanation: "Penguins are native to the Southern Hemisphere only. The AI image placed them in the Arctic/Greenland, a basic geography error that went viral.",
+    roast: "Penguins don't live in the North Pole. You learned this in primary school. Even the AI got confused, but at least it doesn't have a brain — what's your excuse?"
+  },
+  {
+    category: "Science & History",
+    question: "Often credited as the smartest project on the globe, 32 of its participants went on to win Nobel Prizes. Which project?",
+    options: ["Apollo Program", "Manhattan Project", "CERN Large Hadron Collider", "Human Genome Project"],
+    answer: 1,
+    explanation: "The Manhattan Project, which developed the first atomic bomb, had an extraordinary concentration of scientific talent — 32 participants eventually won Nobel Prizes.",
+    roast: "32 Nobel Prize winners on one project and you couldn't identify it? Oppenheimer is shaking his head so hard his hat fell off."
+  },
+  {
+    category: "India & Transport",
+    question: "In Kashmir, a group of traditional service providers protested in 2025 against the introduction of electric vehicles that threatened their livelihood. Who are these professionals?",
+    options: ["Auto-rickshaw drivers", "Ponywalas (horse/pony ride operators)", "Shikara boatmen", "Local taxi drivers"],
+    answer: 1,
+    explanation: "Ponywalas in Kashmir protested against the introduction of EVs in tourist areas, fearing it would destroy their traditional livelihood of offering pony rides.",
+    roast: "Kashmir + traditional transport + protesting EVs. Ponywalas were literally in the news and you picked auto-rickshaws? Have you even been to Pahalgam?"
+  },
+  {
+    category: "History & Transport",
+    question: "In 1967, one country switched its driving from left-hand to right-hand traffic in a single day, causing widespread chaos. A famous photograph shows cars and buses in complete disarray. Which country?",
+    options: ["Japan", "Sweden", "India", "Australia"],
+    answer: 1,
+    explanation: "Sweden switched from left-hand to right-hand traffic on September 3, 1967 (Dagen H). The iconic photo shows the absolute chaos that ensued on Stockholm's streets.",
+    roast: "A Nordic country that switched driving sides and you didn't pick Sweden? That iconic chaos photo has been on every 'crazy history moments' list ever."
   }
 ];
 
