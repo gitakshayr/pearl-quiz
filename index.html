@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELITE QUIZ — Test Your Knowledge</title>
+<title>PEARL QUIZ — Test Your Knowledge</title>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -299,6 +299,15 @@
   .explanation.show { display: block; }
   .explanation strong { color: var(--text); }
 
+  .roast {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    color: var(--accent);
+    font-style: italic;
+    font-size: 0.85rem;
+  }
+
   .btn-next {
     align-self: flex-end;
     background: transparent;
@@ -474,9 +483,9 @@
 
   <!-- LANDING -->
   <div id="landing">
-    <div class="brand">Elite Quiz Challenge</div>
+    <div class="brand">Pearl Quiz Challenge</div>
     <h1 class="title">Test Your <em>Knowledge</em></h1>
-    <p class="subtitle">20 questions spanning history, science, sports, geography & pop culture. Sourced from legendary quiz sessions. No googling.</p>
+    <p class="subtitle">20 questions spanning history, science, sports, geography & pop culture. Sourced from legendary Pearl Wing quiz sessions. No googling.</p>
     <div class="stats-row">
       <div class="stat">
         <div class="stat-value">20</div>
@@ -543,224 +552,256 @@ const ALL_QUESTIONS = [
     question: "A beautiful statue in Lisbon stands near the Vasco da Gama bridge. She married King Charles II of Britain and brought the seven isles of Bombay as dowry. Who is she?",
     options: ["Catherine of Aragon", "Catherine of Braganza", "Anne Boleyn", "Maria Theresa"],
     answer: 1,
-    explanation: "Catherine of Braganza, a Portuguese princess, married King Charles II and brought Bombay (now Mumbai) as part of her dowry to the British Crown."
+    explanation: "Catherine of Braganza, a Portuguese princess, married King Charles II and brought Bombay (now Mumbai) as part of her dowry to the British Crown.",
+    roast: "Bro really said Anne Boleyn? She lost her head, not gave away cities. Maybe you should lose your quiz privileges too."
   },
   {
     category: "India",
     question: "This memorial museum in Gujarat sits on Bhujiyo Hill and is dedicated to the victims of a devastating 2001 event. What is it?",
     options: ["Sabarmati Ashram", "Smritivan Earthquake Memorial", "Somnath Heritage Museum", "Rann Utsav Memorial"],
     answer: 1,
-    explanation: "Smritivan Earthquake Memorial and Museum in Bhuj, Kutch, is dedicated to the victims of the 2001 Gujarat earthquake."
+    explanation: "Smritivan Earthquake Memorial and Museum in Bhuj, Kutch, is dedicated to the victims of the 2001 Gujarat earthquake.",
+    roast: "The 2001 Gujarat earthquake shook the nation and you still couldn't connect the dots. Your general knowledge has more cracks than the fault line."
   },
   {
     category: "Science & Technology",
     question: "What data would a chart showing the USA, Russia, UK, France, China, India, Pakistan, Israel, and North Korea most likely represent?",
     options: ["Space agencies", "Nuclear warheads by country", "Olympic host nations", "UN Security Council members"],
     answer: 1,
-    explanation: "These nine countries are the known nuclear-armed states of the world."
+    explanation: "These nine countries are the known nuclear-armed states of the world.",
+    roast: "Pakistan AND North Korea were on the list and you still didn't get it? Even a 10-year-old watching the news would've cracked that."
   },
   {
     category: "Sports & Games",
     question: "Magnus Carlsen plays a chess opening where the knight goes to h3 (since h1 has the rook and h2 has the pawn). This opening is cheekily named after a chemical compound. What is it?",
     options: ["H₂O Opening", "CO₂ Attack", "The Ammonia Opening (NH3)", "The Methane Gambit"],
     answer: 2,
-    explanation: "The knight on h3 creates the notation Nh3, which looks like the chemical formula NH₃ — Ammonia!"
+    explanation: "The knight on h3 creates the notation Nh3, which looks like the chemical formula NH₃ — Ammonia!",
+    roast: "Knight to h3 = Nh3 = NH₃. It was literally right there in the question. Did you also need help spelling your own name?"
   },
   {
     category: "History & Culture",
     question: "Connect the place Motihari (Bihar) with the words 'Thought Police' and 'Doublespeak'. Who was born there?",
     options: ["Rabindranath Tagore", "George Orwell", "Rudyard Kipling", "Jawaharlal Nehru"],
     answer: 1,
-    explanation: "George Orwell (Eric Arthur Blair) was born in Motihari, Bihar. He coined 'Thought Police' and 'Doublespeak' in his novel 1984."
+    explanation: "George Orwell (Eric Arthur Blair) was born in Motihari, Bihar. He coined 'Thought Police' and 'Doublespeak' in his novel 1984.",
+    roast: "'Thought Police' and 'Doublespeak' and you didn't think of 1984? Big Brother is watching you fail this quiz in real time."
   },
   {
     category: "Sports",
     question: "The Vestas Sailrocket 2 is the world's fastest sailboat. Its design originates from an Indic word. What is it?",
     options: ["Dhow", "Catamaran", "Sampan", "Junk"],
     answer: 1,
-    explanation: "The Catamaran design comes from the Tamil word 'Kattumaram' (கட்டுமரம்), meaning 'tied wood'. Paul Larsen set the speed record on the Vestas Sailrocket 2."
+    explanation: "The Catamaran design comes from the Tamil word 'Kattumaram' (கட்டுமரம்), meaning 'tied wood'. Paul Larsen set the speed record on the Vestas Sailrocket 2.",
+    roast: "It's a Tamil word that's used worldwide and you missed it. The fishermen of Marina Beach are shaking their heads at you right now."
   },
   {
     category: "Science",
     question: "In chemistry, this is the 'silent gate in the path of change' — a fleeting peak where bonds tremble and new ones form. Catalysts help lower it. What is it?",
     options: ["Activation Energy", "Transition State", "Entropy", "Equilibrium"],
     answer: 1,
-    explanation: "The Transition State is the highest-energy configuration along a reaction pathway — where old bonds break and new ones begin forming."
+    explanation: "The Transition State is the highest-energy configuration along a reaction pathway — where old bonds break and new ones begin forming.",
+    roast: "You studied this in class 12 chemistry. The only transition happening here is your confidence transitioning from high to zero."
   },
   {
     category: "Pop Culture",
     question: "What connects Fight Club, Fantastic Four, White House Down, and Jeff Bezos?",
     options: ["All produced by the same studio", "All feature destruction scenes in New York", "Lauren Sánchez (Bezos' fiancée) appears in all those films", "All were released in the same year"],
     answer: 2,
-    explanation: "Lauren Sánchez, Jeff Bezos' fiancée, had acting roles in Fight Club, Fantastic Four, and White House Down."
+    explanation: "Lauren Sánchez, Jeff Bezos' fiancée, had acting roles in Fight Club, Fantastic Four, and White House Down.",
+    roast: "The world's richest man's girlfriend was the answer and you couldn't figure it out. You'd never survive a round of Connections on TV."
   },
   {
     category: "Trivia",
     question: "What connects Charlie Chaplin, Princess Diana, and Coca-Cola?",
     options: ["They all had connections to Switzerland", "Spencer — Chaplin and Diana's middle name, Coca-Cola uses Spencerian script", "They all appeared on Time magazine's cover in the same decade", "They were all born in England"],
     answer: 1,
-    explanation: "Charlie Chaplin's middle name was Spencer, Princess Diana's maiden name was Spencer, and the Coca-Cola logo is written in Spencerian script."
+    explanation: "Charlie Chaplin's middle name was Spencer, Princess Diana's maiden name was Spencer, and the Coca-Cola logo is written in Spencerian script.",
+    roast: "Spencer was right there hiding in plain sight in all three. Your pattern recognition skills are about as sharp as a bowling ball."
   },
   {
     category: "Trivia",
     question: "What connects the DNA double helix discovery, the Wright Brothers' first flight, and the film 'No Country for Old Men'?",
     options: ["All involve pairs of brothers", "A coin toss decided something important in each", "All were originally rejected by experts", "Cambridge University is connected to all three"],
     answer: 1,
-    explanation: "The Wright Brothers flipped a coin to decide who'd fly first. Crick and Watson tossed a coin for whose name went first on the DNA paper. In No Country for Old Men, Anton Chigurh uses a coin toss to decide fates."
+    explanation: "The Wright Brothers flipped a coin to decide who'd fly first. Crick and Watson tossed a coin for whose name went first on the DNA paper. In No Country for Old Men, Anton Chigurh uses a coin toss to decide fates.",
+    roast: "A coin toss. Literally the simplest decision-making device known to mankind. Maybe flip one to decide if you should keep playing."
   },
   {
     category: "Food & Culture",
     question: "Chaprah chutney is popular in Chhattisgarh, Odisha, and Jharkhand. The central ingredient is crushed with a mortar and pestle, then mixed with tomatoes, coriander, garlic, ginger, and chilli. What is this unusual central ingredient?",
     options: ["Tree bark", "Red ants", "Silkworms", "Bamboo shoots"],
     answer: 1,
-    explanation: "Red ant chutney (Chaprah) is a traditional delicacy in parts of central India, prized for its unique tangy, spicy flavour."
+    explanation: "Red ant chutney (Chaprah) is a traditional delicacy in parts of central India, prized for its unique tangy, spicy flavour.",
+    roast: "It's called 'unusual' for a reason. Should've gone with the weirdest option. Your instincts are as bland as unseasoned dal."
   },
   {
     category: "Sports Tech",
     question: "SkeleTRACK is a technology that tracks 29 skeletal points of a human body (head, shoulders, ankles, hips, wrists). It was used as part of SAOT at the 2022 FIFA World Cup. What does it power?",
     options: ["Player fitness monitoring", "Semi-Automated Offside Technology", "Goal-line technology", "VAR instant replays"],
     answer: 1,
-    explanation: "SkeleTRACK powers Semi-Automated Offside Technology (SAOT), which was used at the 2022 FIFA World Cup in Qatar for near-instant offside decisions."
+    explanation: "SkeleTRACK powers Semi-Automated Offside Technology (SAOT), which was used at the 2022 FIFA World Cup in Qatar for near-instant offside decisions.",
+    roast: "SAOT was THE talking point of the 2022 World Cup. Do you even watch football or just pretend during World Cup season?"
   },
   {
     category: "History & Publishing",
     question: "It was co-founded by Émile Moreau and T.K. Banerjee, started its first outlet at the Allahabad railway station in 1887, and was mocked for its English name. Which company?",
     options: ["Higginbothams", "A.H. Wheeler & Co.", "Oxford University Press India", "Crossword Bookstores"],
     answer: 1,
-    explanation: "A.H. Wheeler & Co. became India's most iconic railway bookstore chain, a familiar sight at train stations across the country."
+    explanation: "A.H. Wheeler & Co. became India's most iconic railway bookstore chain, a familiar sight at train stations across the country.",
+    roast: "If you've ever been on an Indian train and didn't notice the Wheeler bookstall, were you even awake? Or just sleeping in your berth like always?"
   },
   {
     category: "Pop Culture",
     question: "Complete the list: Winston Churchill (1940 & 1949), Donald Trump (2016 & 2024), ??? (2023). What connects them and who completes the list?",
     options: ["Nobel Peace Prize — Narendra Modi", "Time Person of the Year — Taylor Swift", "Forbes Most Powerful — Elon Musk", "Pulitzer Prize — Cormac McCarthy"],
     answer: 1,
-    explanation: "All were named TIME Person of the Year. Churchill in 1940 & 1949, Trump in 2016 & 2024, and Taylor Swift in 2023."
+    explanation: "All were named TIME Person of the Year. Churchill in 1940 & 1949, Trump in 2016 & 2024, and Taylor Swift in 2023.",
+    roast: "TIME Person of the Year is probably the most famous annual list on the planet. You've been living under a rock — and not in a cool geological way."
   },
   {
     category: "History & Geopolitics",
     question: "When Shah Pahlavi of Iran wanted foreign investment in infrastructure, several countries sent delegations. Which country's lobbying ultimately shaped Iran's nuclear energy program and later became its biggest geopolitical rival?",
     options: ["France", "Soviet Union", "United States", "United Kingdom"],
     answer: 2,
-    explanation: "The United States aggressively lobbied for influence over Iran's infrastructure and nuclear energy program under Shah Pahlavi, which makes the later US-Iran rivalry all the more ironic."
+    explanation: "The United States aggressively lobbied for influence over Iran's infrastructure and nuclear energy program under Shah Pahlavi, which makes the later US-Iran rivalry all the more ironic.",
+    roast: "The US literally helped build what they later spent decades trying to destroy. The irony was the hint, and you still missed it."
   },
   {
     category: "Sports & History",
     question: "Muntazar al-Zaidi became world-famous in 2008 for a single act. He received gifts including a new home from his former boss, marriage proposals, and a Saudi offered $10 million for the object he used. What did he do?",
     options: ["Scored the winning goal in the Asian Games", "Threw a shoe at President George W. Bush", "Wrote a viral satirical poem about Arab leaders", "Painted a mural on the Baghdad embassy wall"],
     answer: 1,
-    explanation: "Iraqi journalist Muntazar al-Zaidi threw his shoes at President George W. Bush during a press conference in Baghdad. He became a folk hero across the Arab world."
+    explanation: "Iraqi journalist Muntazar al-Zaidi threw his shoes at President George W. Bush during a press conference in Baghdad. He became a folk hero across the Arab world.",
+    roast: "This was literally one of the most memed moments of the 2000s. Were you born yesterday, or do you just have the memory of a goldfish?"
   },
   {
     category: "Geography",
     question: "In 2023, two Schengen countries that were never at war with each other had to redraw their borders. Why?",
     options: ["A river changed course after a flood", "Switzerland and Italy — Alpine glaciers melted, shifting the watershed boundary", "Discovery of a previously unmapped island", "A new EU regulation on maritime borders"],
     answer: 1,
-    explanation: "Climate change caused Alpine glaciers on the Swiss-Italian border to melt, shifting the watershed line that historically defined the border."
+    explanation: "Climate change caused Alpine glaciers on the Swiss-Italian border to melt, shifting the watershed line that historically defined the border.",
+    roast: "Climate change is literally redrawing national borders and you didn't know. Maybe spend less time on Instagram and more on actual news."
   },
   {
     category: "India & Infrastructure",
     question: "Which country recently overtook both the USA and China to become the world's largest road network by total length?",
     options: ["Russia", "Brazil", "India", "Australia"],
     answer: 2,
-    explanation: "India reached 6,617,000+ km of total road network, surpassing both the USA and China to become the world's largest."
+    explanation: "India reached 6,617,000+ km of total road network, surpassing both the USA and China to become the world's largest.",
+    roast: "You drive on Indian roads every day and didn't know India has the world's largest road network? The potholes should've been a clue — there's A LOT of road."
   },
   {
     category: "Cricket",
-    question: "Gilchrist, Warne's 'Captain', and Warner — this is an exhaustive list. What connects these three Australian cricketers?",
+    question: "Gilchrist, Warne, and Warner — this is an exhaustive list. What connects these three Australian cricketers?",
     options: ["All scored triple centuries", "Only foreign (non-Indian) captains to win the IPL", "All took hat-tricks in Tests", "All were banned from cricket at some point"],
     answer: 1,
-    explanation: "Adam Gilchrist (Deccan Chargers, 2009), Shane Warne (Rajasthan Royals, 2008), and David Warner (Sunrisers Hyderabad, 2016) are the only non-Indian captains to win the IPL."
+    explanation: "Adam Gilchrist (Deccan Chargers, 2009), Shane Warne (Rajasthan Royals, 2008), and David Warner (Sunrisers Hyderabad, 2016) are the only non-Indian captains to win the IPL.",
+    roast: "Three Aussie legends, an 'exhaustive list', and you couldn't figure out the IPL connection? Hand in your cricket fan card immediately."
   },
   {
     category: "Tech & Design",
     question: "These keyboard shortcuts first appeared on Apple's Lisa computer, credited to programmer Larry Tesler. He said: 'One was a standard symbol of deletion, one was an upside-down...' What are these shortcuts?",
     options: ["Ctrl+S, Ctrl+P, Ctrl+N, Ctrl+O", "Cut (X), Copy (C), Paste (V), Undo (Z)", "Tab, Enter, Backspace, Delete", "F1, F2, F3, F4"],
     answer: 1,
-    explanation: "Larry Tesler designed the Cut (X), Copy (C), Paste (V), and Undo (Z) keyboard shortcuts for the Apple Lisa — still the standard today."
+    explanation: "Larry Tesler designed the Cut (X), Copy (C), Paste (V), and Undo (Z) keyboard shortcuts for the Apple Lisa — still the standard today.",
+    roast: "You literally use Ctrl+C Ctrl+V fifty times a day and didn't know this? The disrespect to Larry Tesler's legacy is criminal."
   },
   {
     category: "Current Affairs",
     question: "The Indian movie 'Jananayagan' was caught using AI-generated imagery in its trailer. Which AI tool's watermark was spotted in the corner?",
     options: ["ChatGPT / DALL-E", "Midjourney", "Google Gemini", "Stable Diffusion"],
     answer: 2,
-    explanation: "The Gemini AI watermark was spotted in the bottom corner of a shot in the Jananayagan trailer — an embarrassing oversight by the production team."
+    explanation: "The Gemini AI watermark was spotted in the bottom corner of a shot in the Jananayagan trailer — an embarrassing oversight by the production team.",
+    roast: "They forgot to crop out the watermark. You forgot the answer. At least you and the Jananayagan team have something in common."
   },
   {
     category: "Republic Day Special",
     question: "Which country has sent the most Chief Guests to India's Republic Day parade since 1950?",
     options: ["United Kingdom", "Russia", "France", "United States"],
     answer: 2,
-    explanation: "France has been the most frequent Chief Guest at India's Republic Day parade — 6 times since 1950, reflecting the deep India-France relationship."
+    explanation: "France has been the most frequent Chief Guest at India's Republic Day parade — 6 times since 1950, reflecting the deep India-France relationship.",
+    roast: "India and France are basically BFFs in geopolitics and you picked someone else. Macron is crying into his croissant right now."
   },
   {
     category: "Mythology & Science",
     question: "Gayatri, Brihati, Ushnih, Trishtubha, Anushtubha, Pankti, and Jagati are seven Vedic names. What are they named after?",
     options: ["Seven sages (Saptarishi)", "Lord Surya's seven horses (named after Sanskrit poetic meters)", "Seven rivers mentioned in the Rig Veda", "Seven musical notes in Indian classical music"],
     answer: 1,
-    explanation: "Lord Surya's seven horses are named after the seven principal Sanskrit poetic meters (Chandas) from the Vedas."
+    explanation: "Lord Surya's seven horses are named after the seven principal Sanskrit poetic meters (Chandas) from the Vedas.",
+    roast: "Vedic knowledge isn't just for temple uncles. Someone in the original quiz got this right using ChatGPT. What's your excuse?"
   },
   {
     category: "History & Military",
     question: "Subhas Chandra Bose performed a remarkable mid-ocean transfer during WWII. What happened?",
     options: ["He hijacked a British merchant vessel", "He was transferred between a German and a Japanese submarine", "He swam between two warships during a naval battle", "He parachuted from a German plane onto a Japanese carrier"],
     answer: 1,
-    explanation: "In one of WWII's most dramatic escapes, Netaji Subhas Chandra Bose was transferred mid-ocean from a German U-boat to a Japanese submarine in 1943."
+    explanation: "In one of WWII's most dramatic escapes, Netaji Subhas Chandra Bose was transferred mid-ocean from a German U-boat to a Japanese submarine in 1943.",
+    roast: "Netaji escaped the British Empire with more style than you escaped this question. The man switched submarines mid-ocean and you can't switch on your brain."
   },
   {
     category: "Trivia",
-    question: "In the 1880s, a travelling circus star became so famous that rival promoters and newspapers began using its name without permission, leading to a landmark legal and commercial battle. The name became a common English word meaning 'very large'. What is it?",
+    question: "In the 1880s, a travelling circus star became so famous that rival promoters began using its name without permission, leading to a landmark legal battle. The name became a common English word meaning 'very large'. What is it?",
     options: ["Titan", "Colossal", "Jumbo", "Mammoth"],
     answer: 2,
-    explanation: "Jumbo the elephant, P.T. Barnum's famous circus attraction, became so iconic that the word 'Jumbo' entered the English language as a synonym for 'very large'."
+    explanation: "Jumbo the elephant, P.T. Barnum's famous circus attraction, became so iconic that the word 'Jumbo' entered the English language as a synonym for 'very large'.",
+    roast: "You've used the word 'jumbo' your entire life — jumbo pack, jumbo shrimp, jumbo jet — and you didn't know where it came from? Jumbo disappointment."
   },
   {
     category: "Sports",
     question: "What connects Liverpool FC, Tottenham Hotspur, and the French national football team?",
     options: ["All have won the Champions League in the last decade", "Their mascot/symbol is a rooster (coq/cock)", "They all wear red at home", "All were managed by the same coach"],
     answer: 1,
-    explanation: "Liverpool (the Liver bird, historically associated with a cockerel), Spurs (their famous cockerel on a ball crest), and France (Le Coq, the rooster) all feature a rooster/cock as their symbol."
+    explanation: "Liverpool (the Liver bird, historically associated with a cockerel), Spurs (their famous cockerel on a ball crest), and France (Le Coq, the rooster) all feature a rooster/cock as their symbol.",
+    roast: "The cockerel is literally on the Spurs badge and the France jersey. Did you think the French national bird was a baguette?"
   },
   {
     category: "Science",
     question: "In the early days of spaceflight, engineers noticed two identical atomic clocks — one on Earth, one on a satellite — no longer agreed after the mission. What phenomenon explains this?",
     options: ["Quantum tunneling", "General Relativity (time dilation)", "The Doppler Effect", "Electromagnetic interference"],
     answer: 1,
-    explanation: "Einstein's General Relativity predicts that time passes differently depending on gravitational field strength and relative velocity — proven by atomic clocks on satellites running slightly faster than those on Earth."
+    explanation: "Einstein's General Relativity predicts that time passes differently depending on gravitational field strength and relative velocity — proven by atomic clocks on satellites running slightly faster than those on Earth.",
+    roast: "Einstein published this over 100 years ago and it's still going over your head. Your GPS uses this every second to work. You're literally a beneficiary of this theory while getting it wrong."
   },
   {
     category: "Art & History",
     question: "Van Gogh used a specific yellow pigment in his famous paintings including Starry Night. This pigment originates from Munger, Bihar, and is produced by feeding green mangoes to cows. What is it called?",
     options: ["Naples Yellow", "Chrome Yellow", "Indian Yellow", "Cadmium Yellow"],
     answer: 2,
-    explanation: "Indian Yellow was historically produced in Munger, Bihar, by feeding cows a diet of mango leaves. The pigment was extracted from their urine — essentially, Van Gogh used cow urine in his masterpiece."
+    explanation: "Indian Yellow was historically produced in Munger, Bihar, by feeding cows a diet of mango leaves. The pigment was extracted from their urine — essentially, Van Gogh used cow urine in his masterpiece.",
+    roast: "It literally has 'Indian' in the name and was made from cow urine. The most Indian thing ever, and you still missed it. Gaumutra supremacy."
   },
   {
     category: "Wimbledon",
     question: "'As a kid I was dreaming of winning Wimbledon, so like every child, you dream of doing something crazy when you actually achieve it.' Who said this about their quirky post-victory tradition?",
     options: ["Roger Federer — crying into the trophy", "Novak Djokovic — eating the grass", "Rafael Nadal — biting the trophy", "Andy Murray — doing a cartwheel"],
     answer: 1,
-    explanation: "Novak Djokovic eats a blade of grass from Centre Court after winning Wimbledon — a childhood dream ritual he's performed multiple times."
+    explanation: "Novak Djokovic eats a blade of grass from Centre Court after winning Wimbledon — a childhood dream ritual he's performed multiple times.",
+    roast: "Djokovic eats the grass like a goat every time he wins and it's all over social media. Were you watching cricket highlights during Wimbledon finals?"
   },
   {
     category: "Confectionery",
     question: "No one knows how X's Y got their name — not even the company. They hit the market in 1907 and the company holds the trademark, but the origin remains a mystery. What is X's Y?",
     options: ["Cadbury's Fingers", "Hershey's Kisses", "Mars' Twix", "Nestlé's KitKat"],
     answer: 1,
-    explanation: "The origin of the name 'Hershey's Kisses' remains a genuine mystery — even the Hershey Food Corporation doesn't know for sure how the name came about."
+    explanation: "The origin of the name 'Hershey's Kisses' remains a genuine mystery — even the Hershey Food Corporation doesn't know for sure how the name came about.",
+    roast: "1907, trademark mystery, iconic chocolate. You've probably eaten these and still got it wrong. Your taste in answers is as bad as your taste in chocolate."
   },
   {
     category: "Geography",
     question: "The Canary Islands, a popular winter escape in the Atlantic, are the southernmost Schengen territory. Which country do they belong to?",
     options: ["Portugal", "France", "Spain", "Italy"],
     answer: 2,
-    explanation: "The Canary Islands belong to Spain and are located off the northwest coast of Africa — making them the southernmost point of the Schengen Area, over 1,500 km south of mainland Spain."
+    explanation: "The Canary Islands belong to Spain and are located off the northwest coast of Africa — making them the southernmost point of the Schengen Area, over 1,500 km south of mainland Spain.",
+    roast: "Canary Islands, Spain. It's literally in every European travel guide. What were you thinking — Italy has a secret Atlantic island nobody knows about?"
   },
   {
     category: "Music & Dance",
     question: "This became the second longest-running #1 on the Billboard chart, sold 14 million copies, and sparked a dance craze that spread to the Olympics and the Democratic National Convention. What song?",
     options: ["Gangnam Style", "Macarena", "Despacito", "Cha Cha Slide"],
     answer: 1,
-    explanation: "The Macarena by Los del Río became a global phenomenon in 1996, spending 14 weeks at #1 on the Billboard Hot 100."
+    explanation: "The Macarena by Los del Río became a global phenomenon in 1996, spending 14 weeks at #1 on the Billboard Hot 100.",
+    roast: "The Macarena was probably played at your school annual day. Your aunt definitely danced to it at a wedding. And you STILL got it wrong. Ayyy."
   }
 ];
 
@@ -857,7 +898,11 @@ function selectAnswer(idx) {
 
   // Show explanation
   const explEl = document.getElementById('explanation');
-  explEl.innerHTML = `<strong>${isCorrect ? '✓ Correct!' : '✗ Wrong.'}</strong> ${q.explanation}`;
+  if (isCorrect) {
+    explEl.innerHTML = `<strong>✓ Correct!</strong> ${q.explanation}`;
+  } else {
+    explEl.innerHTML = `<strong>✗ Wrong.</strong> ${q.explanation}<div class="roast">💀 ${q.roast}</div>`;
+  }
   explEl.classList.add('show');
 
   // Show next button
@@ -890,7 +935,7 @@ function showResults() {
     gradeEl.textContent = '🏆 QUIZ MASTER';
     gradeEl.style.background = 'rgba(251, 191, 36, 0.15)';
     gradeEl.style.color = 'var(--gold)';
-    msgEl.textContent = 'Absolutely incredible. You belong on the Elite Leaderboard.';
+    msgEl.textContent = 'Absolutely incredible. You belong on the Pearl Leaderboard.';
   } else if (score >= 14) {
     gradeEl.textContent = '🔥 BRILLIANT';
     gradeEl.style.background = 'var(--accent-glow)';
@@ -921,7 +966,7 @@ function restartQuiz() {
 function shareResult() {
   const pct = Math.round((score / 20) * 100);
   const bars = currentQuestions.map((q, i) => '').join(''); // placeholder
-  const text = `ELITE QUIZ — ${score}/20 (${pct}%)\n${'🟩'.repeat(score)}${'🟥'.repeat(20 - score)}\nThink you can beat me?`;
+  const text = `PEARL QUIZ — ${score}/20 (${pct}%)\n${'🟩'.repeat(score)}${'🟥'.repeat(20 - score)}\nThink you can beat me?`;
 
   if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(() => {
