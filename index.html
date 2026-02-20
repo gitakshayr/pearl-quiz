@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELITE QUIZ — Test Your Knowledge</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface-hover: #1a1a28;
+    --border: #2a2a3a;
+    --text: #e8e6f0;
+    --text-dim: #8888a0;
+    --accent: #ff6b35;
+    --accent-glow: rgba(255, 107, 53, 0.15);
+    --correct: #22c55e;
+    --correct-glow: rgba(34, 197, 94, 0.15);
+    --wrong: #ef4444;
+    --wrong-glow: rgba(239, 68, 68, 0.15);
+    --gold: #fbbf24;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== LANDING SCREEN ===== */
+  #landing {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    animation: fadeIn 0.8s ease;
+  }
+
+  .brand {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease 0.2s forwards;
+  }
+
+  .title {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease 0.35s forwards;
+  }
+
+  .title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    color: var(--text-dim);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    max-width: 440px;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease 0.5s forwards;
+  }
+
+  .stats-row {
+    display: flex;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: slideUp 0.6s ease 0.6s forwards;
+  }
+
+  .stat { text-align: center; }
+  .stat-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+  }
+
+  .btn-start {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 1rem 3rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: slideUp 0.6s ease 0.7s forwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255, 107, 53, 0.3);
+  }
+
+  .btn-start:active { transform: translateY(0); }
+
+  /* ===== QUIZ SCREEN ===== */
+  #quiz { display: none; flex: 1; flex-direction: column; }
+  #quiz.active { display: flex; animation: fadeIn 0.5s ease; }
+
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+
+  .progress-info {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+
+  .progress-info span { color: var(--accent); font-weight: 600; }
+
+  .score-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--gold);
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--border);
+    border-radius: 3px;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 3px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .question-category {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: slideUp 0.4s ease 0.1s forwards;
+  }
+
+  .question-text {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: slideUp 0.4s ease 0.2s forwards;
+  }
+
+  .hint-text {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: slideUp 0.4s ease 0.25s forwards;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  .option-btn {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 1rem 1.25rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    text-align: left;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: slideUp 0.35s ease calc(0.3s + var(--i) * 0.06s) forwards;
+  }
+
+  .option-btn:hover:not(.disabled) {
+    background: var(--surface-hover);
+    border-color: var(--accent);
+    transform: translateX(4px);
+  }
+
+  .option-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-dim);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    flex-shrink: 0;
+  }
+
+  .option-btn.correct {
+    background: var(--correct-glow);
+    border-color: var(--correct);
+    color: var(--correct);
+  }
+  .option-btn.correct .option-key { background: var(--correct); color: #000; }
+
+  .option-btn.wrong {
+    background: var(--wrong-glow);
+    border-color: var(--wrong);
+    color: var(--wrong);
+  }
+  .option-btn.wrong .option-key { background: var(--wrong); color: #fff; }
+
+  .option-btn.disabled { cursor: default; opacity: 0.5; }
+  .option-btn.disabled.correct { opacity: 1; }
+  .option-btn.disabled.wrong { opacity: 1; }
+
+  .explanation {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--text-dim);
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .explanation.show { display: block; }
+  .explanation strong { color: var(--text); }
+
+  .btn-next {
+    align-self: flex-end;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.75rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: none;
+    margin-top: auto;
+  }
+
+  .btn-next.show { display: block; animation: fadeIn 0.3s ease; }
+  .btn-next:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+  }
+
+  /* ===== RESULTS SCREEN ===== */
+  #results { display: none; flex: 1; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  #results.active { display: flex; animation: fadeIn 0.6s ease; }
+
+  .results-score {
+    font-family: 'Instrument Serif', serif;
+    font-size: 6rem;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .results-score .out-of {
+    font-size: 2rem;
+    color: var(--text-dim);
+  }
+
+  .results-grade {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    padding: 0.4rem 1.2rem;
+    border-radius: 30px;
+    display: inline-block;
+  }
+
+  .results-message {
+    color: var(--text-dim);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    max-width: 400px;
+    line-height: 1.6;
+  }
+
+  .results-breakdown {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .breakdown-item {
+    text-align: center;
+  }
+
+  .breakdown-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .breakdown-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .btn-retry {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    padding: 0.85rem 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-retry:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(255, 107, 53, 0.3);
+  }
+
+  .btn-share {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 0.85rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .btn-share:hover {
+    border-color: var(--text);
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .shake {
+    animation: shake 0.4s ease;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .bounce {
+    animation: bounce 0.5s ease;
+  }
+
+  @keyframes bounce {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.15); }
+    60% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 480px) {
+    .container { padding: 1.5rem 1rem; }
+    .stats-row { gap: 1.5rem; }
+    .results-breakdown { gap: 1.5rem; }
+    .btn-row { flex-direction: column; width: 100%; }
+    .btn-retry, .btn-share { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- LANDING -->
+  <div id="landing">
+    <div class="brand">Elite Quiz Challenge</div>
+    <h1 class="title">Test Your <em>Knowledge</em></h1>
+    <p class="subtitle">20 questions spanning history, science, sports, geography & pop culture. Sourced from legendary quiz sessions. No googling.</p>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-value">20</div>
+        <div class="stat-label">Questions</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">4</div>
+        <div class="stat-label">Options Each</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value">∞</div>
+        <div class="stat-label">Retries</div>
+      </div>
+    </div>
+    <button class="btn-start" onclick="startQuiz()">Begin Quiz →</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz">
+    <div class="quiz-header">
+      <div class="progress-info">Q<span id="qNum">1</span> / 20</div>
+      <div class="score-display">★ <span id="scoreLive">0</span></div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="question-category" id="qCategory"></div>
+    <div class="question-text" id="qText"></div>
+    <div class="hint-text" id="qHint"></div>
+    <div class="options" id="options"></div>
+    <div class="explanation" id="explanation"></div>
+    <button class="btn-next" id="btnNext" onclick="nextQuestion()">Next →</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="results-score"><span id="finalScore">0</span><span class="out-of"> / 20</span></div>
+    <div class="results-grade" id="grade"></div>
+    <p class="results-message" id="resultsMsg"></p>
+    <div class="results-breakdown">
+      <div class="breakdown-item">
+        <div class="breakdown-value" style="color: var(--correct);" id="correctCount">0</div>
+        <div class="breakdown-label">Correct</div>
+      </div>
+      <div class="breakdown-item">
+        <div class="breakdown-value" style="color: var(--wrong);" id="wrongCount">0</div>
+        <div class="breakdown-label">Wrong</div>
+      </div>
+      <div class="breakdown-item">
+        <div class="breakdown-value" style="color: var(--gold);" id="pctScore">0%</div>
+        <div class="breakdown-label">Accuracy</div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-retry" onclick="restartQuiz()">Play Again</button>
+      <button class="btn-share" onclick="shareResult()">Copy Result</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const ALL_QUESTIONS = [
+  {
+    category: "History & Geography",
+    question: "A beautiful statue in Lisbon stands near the Vasco da Gama bridge. She married King Charles II of Britain and brought the seven isles of Bombay as dowry. Who is she?",
+    options: ["Catherine of Aragon", "Catherine of Braganza", "Anne Boleyn", "Maria Theresa"],
+    answer: 1,
+    explanation: "Catherine of Braganza, a Portuguese princess, married King Charles II and brought Bombay (now Mumbai) as part of her dowry to the British Crown."
+  },
+  {
+    category: "India",
+    question: "This memorial museum in Gujarat sits on Bhujiyo Hill and is dedicated to the victims of a devastating 2001 event. What is it?",
+    options: ["Sabarmati Ashram", "Smritivan Earthquake Memorial", "Somnath Heritage Museum", "Rann Utsav Memorial"],
+    answer: 1,
+    explanation: "Smritivan Earthquake Memorial and Museum in Bhuj, Kutch, is dedicated to the victims of the 2001 Gujarat earthquake."
+  },
+  {
+    category: "Science & Technology",
+    question: "What data would a chart showing the USA, Russia, UK, France, China, India, Pakistan, Israel, and North Korea most likely represent?",
+    options: ["Space agencies", "Nuclear warheads by country", "Olympic host nations", "UN Security Council members"],
+    answer: 1,
+    explanation: "These nine countries are the known nuclear-armed states of the world."
+  },
+  {
+    category: "Sports & Games",
+    question: "Magnus Carlsen plays a chess opening where the knight goes to h3 (since h1 has the rook and h2 has the pawn). This opening is cheekily named after a chemical compound. What is it?",
+    options: ["H₂O Opening", "CO₂ Attack", "The Ammonia Opening (NH3)", "The Methane Gambit"],
+    answer: 2,
+    explanation: "The knight on h3 creates the notation Nh3, which looks like the chemical formula NH₃ — Ammonia!"
+  },
+  {
+    category: "History & Culture",
+    question: "Connect the place Motihari (Bihar) with the words 'Thought Police' and 'Doublespeak'. Who was born there?",
+    options: ["Rabindranath Tagore", "George Orwell", "Rudyard Kipling", "Jawaharlal Nehru"],
+    answer: 1,
+    explanation: "George Orwell (Eric Arthur Blair) was born in Motihari, Bihar. He coined 'Thought Police' and 'Doublespeak' in his novel 1984."
+  },
+  {
+    category: "Sports",
+    question: "The Vestas Sailrocket 2 is the world's fastest sailboat. Its design originates from an Indic word. What is it?",
+    options: ["Dhow", "Catamaran", "Sampan", "Junk"],
+    answer: 1,
+    explanation: "The Catamaran design comes from the Tamil word 'Kattumaram' (கட்டுமரம்), meaning 'tied wood'. Paul Larsen set the speed record on the Vestas Sailrocket 2."
+  },
+  {
+    category: "Science",
+    question: "In chemistry, this is the 'silent gate in the path of change' — a fleeting peak where bonds tremble and new ones form. Catalysts help lower it. What is it?",
+    options: ["Activation Energy", "Transition State", "Entropy", "Equilibrium"],
+    answer: 1,
+    explanation: "The Transition State is the highest-energy configuration along a reaction pathway — where old bonds break and new ones begin forming."
+  },
+  {
+    category: "Pop Culture",
+    question: "What connects Fight Club, Fantastic Four, White House Down, and Jeff Bezos?",
+    options: ["All produced by the same studio", "All feature destruction scenes in New York", "Lauren Sánchez (Bezos' fiancée) appears in all those films", "All were released in the same year"],
+    answer: 2,
+    explanation: "Lauren Sánchez, Jeff Bezos' fiancée, had acting roles in Fight Club, Fantastic Four, and White House Down."
+  },
+  {
+    category: "Trivia",
+    question: "What connects Charlie Chaplin, Princess Diana, and Coca-Cola?",
+    options: ["They all had connections to Switzerland", "Spencer — Chaplin and Diana's middle name, Coca-Cola uses Spencerian script", "They all appeared on Time magazine's cover in the same decade", "They were all born in England"],
+    answer: 1,
+    explanation: "Charlie Chaplin's middle name was Spencer, Princess Diana's maiden name was Spencer, and the Coca-Cola logo is written in Spencerian script."
+  },
+  {
+    category: "Trivia",
+    question: "What connects the DNA double helix discovery, the Wright Brothers' first flight, and the film 'No Country for Old Men'?",
+    options: ["All involve pairs of brothers", "A coin toss decided something important in each", "All were originally rejected by experts", "Cambridge University is connected to all three"],
+    answer: 1,
+    explanation: "The Wright Brothers flipped a coin to decide who'd fly first. Crick and Watson tossed a coin for whose name went first on the DNA paper. In No Country for Old Men, Anton Chigurh uses a coin toss to decide fates."
+  },
+  {
+    category: "Food & Culture",
+    question: "Chaprah chutney is popular in Chhattisgarh, Odisha, and Jharkhand. The central ingredient is crushed with a mortar and pestle, then mixed with tomatoes, coriander, garlic, ginger, and chilli. What is this unusual central ingredient?",
+    options: ["Tree bark", "Red ants", "Silkworms", "Bamboo shoots"],
+    answer: 1,
+    explanation: "Red ant chutney (Chaprah) is a traditional delicacy in parts of central India, prized for its unique tangy, spicy flavour."
+  },
+  {
+    category: "Sports Tech",
+    question: "SkeleTRACK is a technology that tracks 29 skeletal points of a human body (head, shoulders, ankles, hips, wrists). It was used as part of SAOT at the 2022 FIFA World Cup. What does it power?",
+    options: ["Player fitness monitoring", "Semi-Automated Offside Technology", "Goal-line technology", "VAR instant replays"],
+    answer: 1,
+    explanation: "SkeleTRACK powers Semi-Automated Offside Technology (SAOT), which was used at the 2022 FIFA World Cup in Qatar for near-instant offside decisions."
+  },
+  {
+    category: "History & Publishing",
+    question: "It was co-founded by Émile Moreau and T.K. Banerjee, started its first outlet at the Allahabad railway station in 1887, and was mocked for its English name. Which company?",
+    options: ["Higginbothams", "A.H. Wheeler & Co.", "Oxford University Press India", "Crossword Bookstores"],
+    answer: 1,
+    explanation: "A.H. Wheeler & Co. became India's most iconic railway bookstore chain, a familiar sight at train stations across the country."
+  },
+  {
+    category: "Pop Culture",
+    question: "Complete the list: Winston Churchill (1940 & 1949), Donald Trump (2016 & 2024), ??? (2023). What connects them and who completes the list?",
+    options: ["Nobel Peace Prize — Narendra Modi", "Time Person of the Year — Taylor Swift", "Forbes Most Powerful — Elon Musk", "Pulitzer Prize — Cormac McCarthy"],
+    answer: 1,
+    explanation: "All were named TIME Person of the Year. Churchill in 1940 & 1949, Trump in 2016 & 2024, and Taylor Swift in 2023."
+  },
+  {
+    category: "History & Geopolitics",
+    question: "When Shah Pahlavi of Iran wanted foreign investment in infrastructure, several countries sent delegations. Which country's lobbying ultimately shaped Iran's nuclear energy program and later became its biggest geopolitical rival?",
+    options: ["France", "Soviet Union", "United States", "United Kingdom"],
+    answer: 2,
+    explanation: "The United States aggressively lobbied for influence over Iran's infrastructure and nuclear energy program under Shah Pahlavi, which makes the later US-Iran rivalry all the more ironic."
+  },
+  {
+    category: "Sports & History",
+    question: "Muntazar al-Zaidi became world-famous in 2008 for a single act. He received gifts including a new home from his former boss, marriage proposals, and a Saudi offered $10 million for the object he used. What did he do?",
+    options: ["Scored the winning goal in the Asian Games", "Threw a shoe at President George W. Bush", "Wrote a viral satirical poem about Arab leaders", "Painted a mural on the Baghdad embassy wall"],
+    answer: 1,
+    explanation: "Iraqi journalist Muntazar al-Zaidi threw his shoes at President George W. Bush during a press conference in Baghdad. He became a folk hero across the Arab world."
+  },
+  {
+    category: "Geography",
+    question: "In 2023, two Schengen countries that were never at war with each other had to redraw their borders. Why?",
+    options: ["A river changed course after a flood", "Switzerland and Italy — Alpine glaciers melted, shifting the watershed boundary", "Discovery of a previously unmapped island", "A new EU regulation on maritime borders"],
+    answer: 1,
+    explanation: "Climate change caused Alpine glaciers on the Swiss-Italian border to melt, shifting the watershed line that historically defined the border."
+  },
+  {
+    category: "India & Infrastructure",
+    question: "Which country recently overtook both the USA and China to become the world's largest road network by total length?",
+    options: ["Russia", "Brazil", "India", "Australia"],
+    answer: 2,
+    explanation: "India reached 6,617,000+ km of total road network, surpassing both the USA and China to become the world's largest."
+  },
+  {
+    category: "Cricket",
+    question: "Gilchrist, Warne's 'Captain', and Warner — this is an exhaustive list. What connects these three Australian cricketers?",
+    options: ["All scored triple centuries", "Only foreign (non-Indian) captains to win the IPL", "All took hat-tricks in Tests", "All were banned from cricket at some point"],
+    answer: 1,
+    explanation: "Adam Gilchrist (Deccan Chargers, 2009), Shane Warne (Rajasthan Royals, 2008), and David Warner (Sunrisers Hyderabad, 2016) are the only non-Indian captains to win the IPL."
+  },
+  {
+    category: "Tech & Design",
+    question: "These keyboard shortcuts first appeared on Apple's Lisa computer, credited to programmer Larry Tesler. He said: 'One was a standard symbol of deletion, one was an upside-down...' What are these shortcuts?",
+    options: ["Ctrl+S, Ctrl+P, Ctrl+N, Ctrl+O", "Cut (X), Copy (C), Paste (V), Undo (Z)", "Tab, Enter, Backspace, Delete", "F1, F2, F3, F4"],
+    answer: 1,
+    explanation: "Larry Tesler designed the Cut (X), Copy (C), Paste (V), and Undo (Z) keyboard shortcuts for the Apple Lisa — still the standard today."
+  },
+  {
+    category: "Current Affairs",
+    question: "The Indian movie 'Jananayagan' was caught using AI-generated imagery in its trailer. Which AI tool's watermark was spotted in the corner?",
+    options: ["ChatGPT / DALL-E", "Midjourney", "Google Gemini", "Stable Diffusion"],
+    answer: 2,
+    explanation: "The Gemini AI watermark was spotted in the bottom corner of a shot in the Jananayagan trailer — an embarrassing oversight by the production team."
+  },
+  {
+    category: "Republic Day Special",
+    question: "Which country has sent the most Chief Guests to India's Republic Day parade since 1950?",
+    options: ["United Kingdom", "Russia", "France", "United States"],
+    answer: 2,
+    explanation: "France has been the most frequent Chief Guest at India's Republic Day parade — 6 times since 1950, reflecting the deep India-France relationship."
+  },
+  {
+    category: "Mythology & Science",
+    question: "Gayatri, Brihati, Ushnih, Trishtubha, Anushtubha, Pankti, and Jagati are seven Vedic names. What are they named after?",
+    options: ["Seven sages (Saptarishi)", "Lord Surya's seven horses (named after Sanskrit poetic meters)", "Seven rivers mentioned in the Rig Veda", "Seven musical notes in Indian classical music"],
+    answer: 1,
+    explanation: "Lord Surya's seven horses are named after the seven principal Sanskrit poetic meters (Chandas) from the Vedas."
+  },
+  {
+    category: "History & Military",
+    question: "Subhas Chandra Bose performed a remarkable mid-ocean transfer during WWII. What happened?",
+    options: ["He hijacked a British merchant vessel", "He was transferred between a German and a Japanese submarine", "He swam between two warships during a naval battle", "He parachuted from a German plane onto a Japanese carrier"],
+    answer: 1,
+    explanation: "In one of WWII's most dramatic escapes, Netaji Subhas Chandra Bose was transferred mid-ocean from a German U-boat to a Japanese submarine in 1943."
+  },
+  {
+    category: "Trivia",
+    question: "In the 1880s, a travelling circus star became so famous that rival promoters and newspapers began using its name without permission, leading to a landmark legal and commercial battle. The name became a common English word meaning 'very large'. What is it?",
+    options: ["Titan", "Colossal", "Jumbo", "Mammoth"],
+    answer: 2,
+    explanation: "Jumbo the elephant, P.T. Barnum's famous circus attraction, became so iconic that the word 'Jumbo' entered the English language as a synonym for 'very large'."
+  },
+  {
+    category: "Sports",
+    question: "What connects Liverpool FC, Tottenham Hotspur, and the French national football team?",
+    options: ["All have won the Champions League in the last decade", "Their mascot/symbol is a rooster (coq/cock)", "They all wear red at home", "All were managed by the same coach"],
+    answer: 1,
+    explanation: "Liverpool (the Liver bird, historically associated with a cockerel), Spurs (their famous cockerel on a ball crest), and France (Le Coq, the rooster) all feature a rooster/cock as their symbol."
+  },
+  {
+    category: "Science",
+    question: "In the early days of spaceflight, engineers noticed two identical atomic clocks — one on Earth, one on a satellite — no longer agreed after the mission. What phenomenon explains this?",
+    options: ["Quantum tunneling", "General Relativity (time dilation)", "The Doppler Effect", "Electromagnetic interference"],
+    answer: 1,
+    explanation: "Einstein's General Relativity predicts that time passes differently depending on gravitational field strength and relative velocity — proven by atomic clocks on satellites running slightly faster than those on Earth."
+  },
+  {
+    category: "Art & History",
+    question: "Van Gogh used a specific yellow pigment in his famous paintings including Starry Night. This pigment originates from Munger, Bihar, and is produced by feeding green mangoes to cows. What is it called?",
+    options: ["Naples Yellow", "Chrome Yellow", "Indian Yellow", "Cadmium Yellow"],
+    answer: 2,
+    explanation: "Indian Yellow was historically produced in Munger, Bihar, by feeding cows a diet of mango leaves. The pigment was extracted from their urine — essentially, Van Gogh used cow urine in his masterpiece."
+  },
+  {
+    category: "Wimbledon",
+    question: "'As a kid I was dreaming of winning Wimbledon, so like every child, you dream of doing something crazy when you actually achieve it.' Who said this about their quirky post-victory tradition?",
+    options: ["Roger Federer — crying into the trophy", "Novak Djokovic — eating the grass", "Rafael Nadal — biting the trophy", "Andy Murray — doing a cartwheel"],
+    answer: 1,
+    explanation: "Novak Djokovic eats a blade of grass from Centre Court after winning Wimbledon — a childhood dream ritual he's performed multiple times."
+  },
+  {
+    category: "Confectionery",
+    question: "No one knows how X's Y got their name — not even the company. They hit the market in 1907 and the company holds the trademark, but the origin remains a mystery. What is X's Y?",
+    options: ["Cadbury's Fingers", "Hershey's Kisses", "Mars' Twix", "Nestlé's KitKat"],
+    answer: 1,
+    explanation: "The origin of the name 'Hershey's Kisses' remains a genuine mystery — even the Hershey Food Corporation doesn't know for sure how the name came about."
+  },
+  {
+    category: "Geography",
+    question: "The Canary Islands, a popular winter escape in the Atlantic, are the southernmost Schengen territory. Which country do they belong to?",
+    options: ["Portugal", "France", "Spain", "Italy"],
+    answer: 2,
+    explanation: "The Canary Islands belong to Spain and are located off the northwest coast of Africa — making them the southernmost point of the Schengen Area, over 1,500 km south of mainland Spain."
+  },
+  {
+    category: "Music & Dance",
+    question: "This became the second longest-running #1 on the Billboard chart, sold 14 million copies, and sparked a dance craze that spread to the Olympics and the Democratic National Convention. What song?",
+    options: ["Gangnam Style", "Macarena", "Despacito", "Cha Cha Slide"],
+    answer: 1,
+    explanation: "The Macarena by Los del Río became a global phenomenon in 1996, spending 14 weeks at #1 on the Billboard Hot 100."
+  }
+];
+
+let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  currentQuestions = shuffle(ALL_QUESTIONS).slice(0, 20);
+  currentIndex = 0;
+  score = 0;
+  answered = false;
+
+  document.getElementById('landing').style.display = 'none';
+  document.getElementById('results').classList.remove('active');
+  document.getElementById('quiz').classList.add('active');
+
+  renderQuestion();
+}
+
+function renderQuestion() {
+  answered = false;
+  const q = currentQuestions[currentIndex];
+
+  document.getElementById('qNum').textContent = currentIndex + 1;
+  document.getElementById('scoreLive').textContent = score;
+  document.getElementById('progressFill').style.width = `${((currentIndex) / 20) * 100}%`;
+  document.getElementById('qCategory').textContent = q.category;
+  document.getElementById('qText').textContent = q.question;
+  document.getElementById('qHint').textContent = q.hint || '';
+  document.getElementById('qHint').style.display = q.hint ? 'block' : 'none';
+
+  // Reset animations
+  document.getElementById('qCategory').style.animation = 'none';
+  document.getElementById('qText').style.animation = 'none';
+  requestAnimationFrame(() => {
+    document.getElementById('qCategory').style.animation = '';
+    document.getElementById('qText').style.animation = '';
+  });
+
+  const optionsEl = document.getElementById('options');
+  optionsEl.innerHTML = '';
+  const keys = ['A', 'B', 'C', 'D'];
+
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.style.setProperty('--i', i);
+    // Reset animation
+    btn.style.animation = 'none';
+    requestAnimationFrame(() => { btn.style.animation = ''; });
+
+    btn.innerHTML = `<span class="option-key">${keys[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => selectAnswer(i);
+    optionsEl.appendChild(btn);
+  });
+
+  document.getElementById('explanation').classList.remove('show');
+  document.getElementById('btnNext').classList.remove('show');
+}
+
+function selectAnswer(idx) {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestions[currentIndex];
+  const buttons = document.querySelectorAll('.option-btn');
+  const isCorrect = idx === q.answer;
+
+  buttons.forEach((btn, i) => {
+    btn.classList.add('disabled');
+    if (i === q.answer) btn.classList.add('correct');
+    if (i === idx && !isCorrect) btn.classList.add('wrong');
+  });
+
+  if (isCorrect) {
+    score++;
+    document.getElementById('scoreLive').textContent = score;
+    document.getElementById('scoreLive').parentElement.classList.add('bounce');
+    setTimeout(() => document.getElementById('scoreLive').parentElement.classList.remove('bounce'), 500);
+  } else {
+    buttons[idx].classList.add('shake');
+  }
+
+  // Show explanation
+  const explEl = document.getElementById('explanation');
+  explEl.innerHTML = `<strong>${isCorrect ? '✓ Correct!' : '✗ Wrong.'}</strong> ${q.explanation}`;
+  explEl.classList.add('show');
+
+  // Show next button
+  document.getElementById('btnNext').classList.add('show');
+  document.getElementById('btnNext').textContent = currentIndex < 19 ? 'Next →' : 'See Results →';
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= 20) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResults() {
+  document.getElementById('quiz').classList.remove('active');
+  document.getElementById('results').classList.add('active');
+
+  document.getElementById('finalScore').textContent = score;
+  document.getElementById('correctCount').textContent = score;
+  document.getElementById('wrongCount').textContent = 20 - score;
+  document.getElementById('pctScore').textContent = Math.round((score / 20) * 100) + '%';
+
+  const gradeEl = document.getElementById('grade');
+  const msgEl = document.getElementById('resultsMsg');
+
+  if (score >= 18) {
+    gradeEl.textContent = '🏆 QUIZ MASTER';
+    gradeEl.style.background = 'rgba(251, 191, 36, 0.15)';
+    gradeEl.style.color = 'var(--gold)';
+    msgEl.textContent = 'Absolutely incredible. You belong on the Elite Leaderboard.';
+  } else if (score >= 14) {
+    gradeEl.textContent = '🔥 BRILLIANT';
+    gradeEl.style.background = 'var(--accent-glow)';
+    gradeEl.style.color = 'var(--accent)';
+    msgEl.textContent = 'Seriously impressive knowledge across the board.';
+  } else if (score >= 10) {
+    gradeEl.textContent = '👍 SOLID';
+    gradeEl.style.background = 'var(--correct-glow)';
+    gradeEl.style.color = 'var(--correct)';
+    msgEl.textContent = 'Good showing! A few more rounds and you\'ll be at the top.';
+  } else if (score >= 6) {
+    gradeEl.textContent = '📚 KEEP LEARNING';
+    gradeEl.style.background = 'rgba(136, 136, 160, 0.15)';
+    gradeEl.style.color = 'var(--text-dim)';
+    msgEl.textContent = 'Not bad, but there\'s room to grow. Try again?';
+  } else {
+    gradeEl.textContent = '🎲 BETTER LUCK';
+    gradeEl.style.background = 'var(--wrong-glow)';
+    gradeEl.style.color = 'var(--wrong)';
+    msgEl.textContent = 'The quiz gods were not with you today. Give it another shot!';
+  }
+}
+
+function restartQuiz() {
+  startQuiz();
+}
+
+function shareResult() {
+  const pct = Math.round((score / 20) * 100);
+  const bars = currentQuestions.map((q, i) => '').join(''); // placeholder
+  const text = `ELITE QUIZ — ${score}/20 (${pct}%)\n${'🟩'.repeat(score)}${'🟥'.repeat(20 - score)}\nThink you can beat me?`;
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.btn-share');
+      btn.textContent = 'Copied! ✓';
+      setTimeout(() => btn.textContent = 'Copy Result', 2000);
+    });
+  }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('quiz').classList.contains('active')) return;
+
+  if (!answered) {
+    const keyMap = { 'a': 0, 'b': 1, 'c': 2, 'd': 3, '1': 0, '2': 1, '3': 2, '4': 3 };
+    if (keyMap[e.key.toLowerCase()] !== undefined) {
+      selectAnswer(keyMap[e.key.toLowerCase()]);
+    }
+  } else if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') {
+    nextQuestion();
+  }
+});
+</script>
+
+</body>
+</html>
